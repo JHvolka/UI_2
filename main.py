@@ -1,9 +1,10 @@
 import itertools
 import math
 import random
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from PIL import Image, ImageDraw
 import os
+from copy import deepcopy
 
 
 class PopulationSizeError(Exception):
@@ -17,6 +18,13 @@ class PopulationSizeError(Exception):
 class City:
     x: float
     y: float
+    identifier: int = field(default_factory=itertools.count().__next__, init=False)
+
+    def __str__(self):
+        return f"City {self.identifier}"
+
+    def __repr__(self):
+        return f"City {self.identifier}"
 
 
 class Map:
