@@ -35,6 +35,9 @@ class Map:
         self.cities: list[City] = []
         self.number_of_cities = number_of_cities
 
+    def get_num_of_cities(self):
+        return self.number_of_cities
+
     def generate_cities(self):
         self.cities = []
         for i in range(0, self.number_of_cities):
@@ -54,6 +57,7 @@ class Map:
 
     def draw(self, path: str = "images/", generation: int = 0, number: int = 0):
         image = Image.new('RGB', (2100, 2100), (0, 0, 0))
+
         draw = ImageDraw.Draw(image)
 
         for idx, val in enumerate(self.cities):
@@ -71,18 +75,40 @@ class Map:
             os.makedirs(path)
 
         #
-        image.save(f'{path}map_{generation}_{number}.png')
+        image.save(f'{path}map_{generation}_{number}_{self.id}.png')
         # with open(f'{path}map_{generation}_{number}_{self.id}.png', 'wb') as f:
         #     w = png.Writer(width, height, greyscale=False)
         #     w.write(f, img)
         return f'{path}map_{generation}_{number}_{self.id}.png'
 
+    def random_neighbour(self):
+        m = deepcopy(self)
+        print(m.cities)
 
-class Population:
-    def __init__(self, maps_number: int, cities_number: int):
-        self.maps_number = maps_number
-        self.cities_number = cities_number
-        self.maps = [Map(cities_number) for x in range(0, maps_number)]
+        # c_1 = int(random.uniform(0, self.number_of_cities))
+        # c_2 = int(random.uniform(0, self.number_of_cities))
+        c_1 = 2
+        c_2 = 5
+
+        # noinspection PyUnreachableCode
+        if True:  # random.uniform(0, 1) > 0.0:
+            # reverse
+            if c_1 > c_2:
+                temp = m.cities[c_2::-1] + m.cities[self.get_num_of_cities():c_1 - 1:-1] + m.cities[c_2 + 1:c_1]
+            else:
+                temp = m.cities[:c_1] + m.cities[c_2:c_1 - 1:-1] + m.cities[c_2 + 1:]
+        else:
+            # TODO other mutation
+            pass
+        m.cities = temp
+        print(m.cities)
+        return m
+
+
+def simulated_annealing(m: Map, max_states_multiplier: int = 100, neighbour_count: int = 50, initial_temp: float = 1.0):
+    s = m
+    for i in range(0, max_states_multiplier * m.get_num_of_cities()):
+        pass
 
 
 def generate_gif(self, path_list: list[str]):
@@ -91,10 +117,12 @@ def generate_gif(self, path_list: list[str]):
 
 
 def main():
-    gen = Map(100)
+    gen = Map(10)
     gen.generate_cities()
     print(gen.get_fitness())
     gen.draw()
+    gen = gen.random_neighbour()
+    gen.draw(generation=1)
 
 
 if __name__ == '__main__':
