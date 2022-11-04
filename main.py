@@ -11,6 +11,7 @@ from enum import Enum
 import numpy as np
 import time
 import pandas as pd
+from pathos.multiprocessing import ProcessingPool as Pool
 
 
 class PopulationSizeError(Exception):
@@ -24,6 +25,7 @@ class PopulationSizeError(Exception):
 class City:
     x: float
     y: float
+    original_pos: int
     identifier: int = field(default_factory=itertools.count().__next__, init=False)
 
     def __str__(self):
@@ -48,7 +50,7 @@ class Map:
     def generate_cities(self):
         self.cities = []
         for i in range(0, self.number_of_cities):
-            self.cities.append(City(random.uniform(-200.0, 200.0), random.uniform(-200.0, 200.0)))
+            self.cities.append(City(random.uniform(-200.0, 200.0), random.uniform(-200.0, 200.0), i))
 
     def set_cities(self, city_list: list[City]):
         if len(city_list) != self.number_of_cities:
@@ -226,8 +228,8 @@ def test_simulated_annealing(m: Map,
     return dataframe, temp_map, fit_map
 
 
-def main():
-    map_orig = Map(30)
+def annealing_test(city_count: int = 30, print_table: bool = False, output_images: bool = True):
+    map_orig = Map(city_count)
     map_orig.generate_cities()
 
     df = pd.DataFrame(data={"name": [],
@@ -256,21 +258,28 @@ def main():
                                                              initial_temp_multiplier=500,
                                                              cooling_factor=0.99)
 
-    sns.set(rc={'figure.figsize': (10, 10)})
-    ax = sns.lineplot(data=temp_map_quad, errorbar=None, estimator=None, label="quadratic")
-    ax = sns.lineplot(data=temp_map_lin, errorbar=None, estimator=None, label="linear")
-    ax = sns.lineplot(data=temp_map_exp, errorbar=None, estimator=None, label="exponential")
-    ax.set(xlabel='Iterations', ylabel='Temperature')
-    ax.set(yscale='log')
-    plt.savefig("temp_map.png")
-    plt.clf()
-    ax = sns.lineplot(data=fit_map_quad, errorbar=None, estimator=None, label="quadratic")
-    ax = sns.lineplot(data=fit_map_lin, errorbar=None, estimator=None, label="linear")
-    ax = sns.lineplot(data=fit_map_exp, errorbar=None, estimator=None, label="exponential")
-    ax.set(xlabel='Iterations', ylabel='Fitness')
-    plt.savefig("fit_map.png")
+    if output_images:
+        sns.set(rc={'figure.figsize': (10, 10)})
+        ax = sns.lineplot(data=temp_map_quad, errorbar=None, estimator=None, label="quadratic")
+        ax = sns.lineplot(data=temp_map_lin, errorbar=None, estimator=None, label="linear")
+        ax = sns.lineplot(data=temp_map_exp, errorbar=None, estimator=None, label="exponential")
+        ax.set(xlabel='Iterations', ylabel='Temperature')
+        ax.set(yscale='log')
+        plt.savefig("temp_map.png")
+        plt.clf()
+        ax = sns.lineplot(data=fit_map_quad, errorbar=None, estimator=None, label="quadratic")
+        ax = sns.lineplot(data=fit_map_lin, errorbar=None, estimator=None, label="linear")
+        ax = sns.lineplot(data=fit_map_exp, errorbar=None, estimator=None, label="exponential")
+        ax.set(xlabel='Iterations', ylabel='Fitness')
+        plt.savefig("fit_map.png")
 
-    print(df)
+    if print_table:
+        print(df)
+    return df
+
+
+def main():
+    annealing_test()
 
 
 if __name__ == '__main__':
