@@ -164,11 +164,13 @@ class Schedules(Enum):
     LINEAR = 3
 
 
-def simulated_annealing(m: Map, max_states_multiplier: int = 30,
-                        neighbour_count_multiplier: float = 2,
-                        initial_temp_multiplier: float = 500,
-                        cooling_factor: float = 0.99,
-                        schedule: Schedules = Schedules.EXPONENTIAL):
+def simulated_annealing(m: Map, **kwargs):
+    max_states_multiplier: int = kwargs.get("max_states_multiplier", 30)
+    neighbour_count_multiplier: float = kwargs.get("neighbour_count_multiplier", 2)
+    initial_temp_multiplier: float = kwargs.get("initial_temp_multiplier", 500)
+    cooling_factor: float = kwargs.get("cooling_factor", 0.99)
+    schedule: Schedules = kwargs.get("schedule", Schedules.EXPONENTIAL)
+
     initial_temperature: float = initial_temp_multiplier * m.get_num_of_cities()
     temperature = initial_temperature
     temperature_map = []
