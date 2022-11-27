@@ -1,0 +1,102 @@
+\begingroup
+\frontmatter
+
+% Title
+\title{Umelá inteligencia \\ Simulované žíhanie a zakázané prehľadávanie}
+\author{Jakub Hvolka}
+\maketitle
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\mainmatter
+
+
+\section{Zadanie}\label{sec:zadanie}
+
+Úlohou bolo implementovať metaheiristické algoritmy na riešenie problému \em{obchodného cestujúceho}
+
+Na začiatku je poskytnutá mapa s rozmermi 400x400, na ktorej sa nachádzajú mestá.
+Algoritmus má optimalizovať dĺžku cesty medzi danými mestami.
+
+Konkrétne algoritmy ktoré som implementoval sú \em{tabu search} a \em{simulated annealing}.
+
+
+\section{Opis riešenia}\label{sec:opis-riešenia}
+
+Program som písal v jazyku python.
+
+Susedné mapy sú tvorené pomocou inverzie poradia časti cesty.
+
+\subsection{Simulated annealing}\label{subsec:simulated-annealing}
+
+Implementoval som 3 rôzne rozvrhy: lineárny, exponenciálny a kvardatický.
+
+\subsection{Tabu search}\label{subsec:algoritmus}
+
+Implementoval som základný algoritmus, kde som ako podmienky ukončenia použil maximálny počet iterácií a
+maximálny počet iterácií bez nájdenia lepšieho riešenia.
+
+
+\section{Testovanie}\label{sec:testovanie}
+
+
+Výsledné mapy po testovaní 30 \ref{fig:map_30}  a 40 \ref{fig:map_40} mestami pre simmulated annealing:
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/map_30Exponential}
+    \includegraphics[width=0.5\textwidth]{images/map_30Linear}
+    \includegraphics[width=0.5\textwidth]{images/map_30Quadratic}
+    \caption{fig:Výstup simmulated annealing pre 30 miest ( postupne exponenciálny, lineárny a kvadratický rozvrh)}\label{fig:map_30}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/map_40Exponential}
+    \includegraphics[width=0.5\textwidth]{images/map_40Linear}
+    \includegraphics[width=0.5\textwidth]{images/map_40Quadratic}
+    \caption{fig:Výstup simmulated annealing pre 40 miest ( postupne exponenciálny, lineárny a kvadratický rozvrh)}\label{fig:map_40}
+\end{figure}
+
+Výsledné mapy po testovaní 30 a 40 mestami po tabu search\ref{fig:tabu}:
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/map_tabu30}
+    \includegraphics[width=0.5\textwidth]{images/map_tabu40}
+    \caption{fig: Výstup tabu search pre 30 a 40 miest.}\label{fig:tabu}
+\end{figure}
+
+Grafy:
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/fit_map_30}
+    \includegraphics[width=0.5\textwidth]{images/fit_map_40}
+    \caption{Annealing fitness pre 30 a 40 miest}
+    \label{fig:}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/temp_map_30}
+    \includegraphics[width=0.5\textwidth]{images/temp_map_40}
+    \caption{Annealing teplota pre 30 a 40 miest}
+    \label{fig:}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/tabu_map}
+    \caption{Tabu search fitness najlepšej a aktuálnej cesty}
+    \label{fig:}
+\end{figure}
+
+
+
+
+
+\endgroup

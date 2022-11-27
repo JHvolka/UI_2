@@ -1,0 +1,72 @@
+%! Author = Atelan
+%! Date = 11/12/2022
+
+
+% Preamble
+\documentclass[a4paper, oneside, slovak]{article}
+
+% Language packages for slovak language compatibility
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[slovak]{babel}
+
+% Font
+\usepackage[fontsize=12pt]{scrextend}
+% Any size fonts
+\usepackage{lmodern}
+
+% Page geometry
+\usepackage[margin=2.5cm, bindingoffset=.5cm]{geometry} % Regular A5
+%\usepackage[papersize={4.5in,5.5in},hmargin=0 cm,vmargin={0 cm,0.06 cm}]{geometry} % Kindle
+
+% Color
+\usepackage{color}
+
+% Math libraries
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{turnstile} % Turnstile symbol
+\usepackage{wasysym} % Additional symbols
+\usepackage{bm} % Bold math symbols
+
+\usepackage{listings}
+
+% Tikz
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc}
+
+% Tools for better tables
+\usepackage{booktabs}
+\usepackage{array}
+
+% Page layout tools
+\usepackage{enumitem} % Better enumeration
+\usepackage{float} % Tools for floats
+\usepackage{placeins} % Float restriction
+\usepackage{graphicx} % Include graphics
+\usepackage{graphics}
+\usepackage{lipsum}
+\usepackage{hhline} % Figure environment
+\usepackage{subfiles} % Multiple level file include
+
+% For watermark logo
+\usepackage{eso-pic}
+
+% Index
+\usepackage{makeidx}
+\makeindex
+\usepackage[totoc]{idxlayout} % Additional index options
+
+% Hyperlinks
+\usepackage{hyperref}
+
+
+% Title format
+\usepackage{titlesec} % Sections overhaul
+
+
+% Document
+\begin{document}
+    \subfile{documentation_body.tex}
+\end{document}
